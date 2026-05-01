@@ -1,42 +1,37 @@
-#include <stdio.h>
 #include <stdlib.h>
 
-int Partition(int[], int, int);
-void Quicksort(int[], int, int);
+long long confronti = 0;
+long long scambi = 0;
 
-int main(){
-    int array[10] = {4, 3, 1, 2, 6, 5};
-    int i;
-
-    printf("Array: 4 3 1 2 6 5");
-    Quicksort(array, 0, 5);
-    printf("\nArray ordinato: ");
-    for(i=0; i<6; i++){
-        printf("%d ", array[i]);
-    }
-    return 0;
-}
-
-int Partition(int a[], int lo, int hi){
+int Partition(int a[], int lo, int hi) {
     int pivot = a[hi];
     int i = lo - 1, j, tmp;
 
-    for(j = lo; j < hi; j++){
-        if(a[j] <= pivot){
+    for (j = lo; j < hi; j++) {
+        confronti++;                              
+        if (a[j] <= pivot) {
             i++;
             tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+            scambi++;                             
         }
     }
     tmp = a[i+1]; a[i+1] = a[hi]; a[hi] = tmp;
+    scambi++;                                     
     return i + 1;
 }
 
-void Quicksort(int a[], int lo, int hi){
+void Quicksort(int a[], int lo, int hi) {
     int p;
-    if(lo<hi){
-        p=Partition(a, lo, hi);
-        Quicksort(a, lo, p-1);
-        Quicksort(a, p+1, hi);
-    } 
+    if (lo < hi) {
+        p = Partition(a, lo, hi);
+        Quicksort(a, lo, p - 1);
+        Quicksort(a, p + 1, hi);
+    }
+}
+
+void sort(int *arr, int n) {
+    confronti = 0;
+    scambi = 0;
+    Quicksort(arr, 0, n - 1);
 }
 
